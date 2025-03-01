@@ -101,7 +101,7 @@
         {#each ["+", "-", "×", "÷"] as i}
           <button
             class="py-0.5 px-2 w-8 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200"
-            class:bg-gray-700!={operator == i}
+            class:!bg-gray-700={operator == i}
             class:text-white={operator == i}
             on:click={() => (operator = i)}
           >
@@ -115,7 +115,7 @@
         {#each ["easy", "medium", "hard"] as i}
           <button
             class="py-0.5 px-2 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200 capitalize"
-            class:bg-gray-700!={level == i}
+            class:!bg-gray-700={level == i}
             class:text-white={level == i}
             on:click={() => (level = i)}
           >
