@@ -134,7 +134,7 @@
     </div>
   </div>
 
-  <div class="text-2xl grid sm:grid-cols-2 gap-11">
+  <div class="text-xl sm:text-2xl grid sm:grid-cols-2 gap-11">
     {#each problems as p}
       <div class=" flex gap-4">
         <div>{p.a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
