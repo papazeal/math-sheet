@@ -1,0 +1,97 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Logo from "../components/Logo.astro";
+
+function generateRandomMathProblems(count: number) {
+  const operators = ["+", "-", "×"];
+  const problems = [];
+
+  for (let i = 0; i < count; i++) {
+    let a = Math.floor(Math.random() * 20) + 1;
+    let b = Math.floor(Math.random() * 20) + 1;
+    let operator = operators[Math.floor(Math.random() * operators.length)];
+    let result;
+
+    switch (operator) {
+      case "+":
+        result = a + b;
+        break;
+      case "-":
+        result = a - b;
+        break;
+      case "×":
+        result = a * b;
+        break;
+    }
+
+    problems.push({ a, b, operator, result });
+  }
+
+  return problems;
+}
+const problems = generateRandomMathProblems(26);
+let level = "easy";
+---
+
+<Layout>
+  <div class="py-10 px-10 print:p-0 max-w-3xl mx-auto">
+    <div class="text-center print:hidden mb-10">
+      <Logo />
+    </div>
+
+    <div
+      class="bg-white border-gray-200 border mx-auto shadow-lg p-10 print:border-0 print:shadow-none"
+    >
+      <div class="print:hidden mb-14 flex gap-12">
+        <div>
+          <div class="flex gap-2 text-xl">
+            {
+              ["+", "-", "×", "÷"].map((i) => (
+                <div class="py-0.5 px-2 w-8 text-center rounded bg-gray-100 cursor-pointer hover:opacity-70">
+                  {i}
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div>
+          <div class="flex gap-2 text-xl">
+            {
+              ["easy", "medium", "hard"].map((i) => (
+                <div class="py-0.5 px-2  text-center rounded bg-gray-100 cursor-pointer hover:opacity-70">
+                  {i}
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div class="ml-auto">
+          <div
+            class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer"
+            onclick="window.print();"
+          >
+            Print
+          </div>
+        </div>
+      </div>
+
+      <div class="text-3xl grid sm:grid-cols-2 gap-11">
+        {
+          problems.map((p) => (
+            <div class=" flex gap-4">
+              <div>{p.a}</div>
+              <div>{p.operator}</div>
+              <div>{p.b}</div>
+              <div>=</div>
+              <div class="hidden">{p.result}</div>
+              <div class="border-b border-gray-500 w-full" />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <div class="text-center mt-8 text-gray-500 print:hidden">
+      create by <a href="https://papazeal.com">papazeal.com</a>
+    </div>
+  </div>
+</Layout>
