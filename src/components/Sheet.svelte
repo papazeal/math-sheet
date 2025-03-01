@@ -97,10 +97,10 @@
 <div>
   <div class="print:hidden mb-14 grid sm:flex gap-5 sm:gap-12 text-xl">
     <div>
-      <div class="flex gap-3">
+      <div class="flex gap-4 sm:gap-3 justify-center">
         {#each ["+", "-", "×", "÷"] as i}
           <button
-            class="py-0.5 px-2 w-8 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200"
+            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300"
             class:!bg-gray-700={operator == i}
             class:text-white={operator == i}
             on:click={() => (operator = i)}
@@ -111,10 +111,10 @@
       </div>
     </div>
     <div>
-      <div class="flex gap-3">
+      <div class="flex gap-4 sm:gap-3 justify-center">
         {#each ["easy", "medium", "hard"] as i}
           <button
-            class="py-0.5 px-2 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200 capitalize"
+            class="py-0.5 px-2.5 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize"
             class:!bg-gray-700={level == i}
             class:text-white={level == i}
             on:click={() => (level = i)}
@@ -124,9 +124,9 @@
         {/each}
       </div>
     </div>
-    <div class="sm:ml-auto">
+    <div class="sm:ml-auto flex justify-center">
       <button
-        class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer"
+        class="bg-blue-400 text-white px-6 py-1 rounded cursor-pointer"
         on:click={() => window.print()}
       >
         Print
