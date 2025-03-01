@@ -1,50 +1,89 @@
 <script>
-  let name = "world";
-  let count = 0;
   let operator = "+";
   let level = "easy";
-  $: problems = generateRandomMathProblems(28, operator, level);
+  let count = 28;
+  $: problems = generateRandomMathProblems(count, operator, level);
+
+  function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   function generateRandomMathProblems(count, operator, level) {
-    const operators = ["+", "-", "×"];
     const problems = [];
-    let max = 10;
-    let min = 1;
-    switch (level) {
-      case "easy":
-        min = 1;
-        max = 10;
-        break;
-      case "medium":
-        min = 10;
-        max = 99;
-        break;
-      case "hard":
-        min = 100;
-        max = 999;
-        break;
-    }
 
     for (let i = 0; i < count; i++) {
-      let a = Math.floor(Math.random() * max) + min;
-      let b = Math.floor(Math.random() * max) + min;
-      //   let operator = operators[Math.floor(Math.random() * operators.length)];
-      let result;
+      let a, b, result;
 
       switch (operator) {
         case "+":
+          switch (level) {
+            case "easy":
+              a = getRandomNumber(1, 9);
+              b = getRandomNumber(1, 9);
+              break;
+            case "medium":
+              a = getRandomNumber(10, 99);
+              b = getRandomNumber(10, 99);
+              break;
+            case "hard":
+              a = getRandomNumber(100, 999);
+              b = getRandomNumber(100, 999);
+              break;
+          }
           result = a + b;
           break;
         case "-":
+          switch (level) {
+            case "easy":
+              a = getRandomNumber(1, 9);
+              b = getRandomNumber(1, 9);
+              break;
+            case "medium":
+              a = getRandomNumber(10, 99);
+              b = getRandomNumber(10, 99);
+              break;
+            case "hard":
+              a = getRandomNumber(100, 999);
+              b = getRandomNumber(100, 999);
+              break;
+          }
           result = a - b;
           break;
         case "×":
+          switch (level) {
+            case "easy":
+              a = getRandomNumber(1, 9);
+              b = getRandomNumber(1, 9);
+              break;
+            case "medium":
+              a = getRandomNumber(10, 99);
+              b = getRandomNumber(1, 9);
+              break;
+            case "hard":
+              a = getRandomNumber(100, 999);
+              b = getRandomNumber(10, 99);
+              break;
+          }
           result = a * b;
           break;
         case "÷":
-          result = a * b;
-          a = result;
-          result = a;
+          switch (level) {
+            case "easy":
+              a = getRandomNumber(2, 9);
+              b = getRandomNumber(2, 9);
+              break;
+            case "medium":
+              a = getRandomNumber(10, 99);
+              b = getRandomNumber(2, 9);
+              break;
+            case "hard":
+              a = getRandomNumber(10, 99);
+              b = getRandomNumber(10, 99);
+              break;
+          }
+          //   result = a * b;
+          a = a * b;
+          result = a / b;
           break;
       }
 
