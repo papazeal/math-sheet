@@ -56,7 +56,7 @@
 </script>
 
 <div>
-  <div class="print:hidden mb-14 flex gap-12">
+  <div class="print:hidden mb-14 flex flex-wrap gap-5 sm:gap-12">
     <div>
       <div class="flex gap-2 text-xl">
         {#each ["+", "-", "×", "÷"] as i}
