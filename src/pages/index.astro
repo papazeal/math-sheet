@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Logo from "../components/Logo.astro";
+import Sheet from "../components/Sheet.svelte";
 
 function generateRandomMathProblems(count: number) {
   const operators = ["+", "-", "×"];
@@ -42,53 +43,7 @@ let level = "easy";
     <div
       class="bg-white border-gray-200 border mx-auto shadow-lg p-10 print:border-0 print:shadow-none"
     >
-      <div class="print:hidden mb-14 flex gap-12">
-        <div>
-          <div class="flex gap-2 text-xl">
-            {
-              ["+", "-", "×", "÷"].map((i) => (
-                <div class="py-0.5 px-2 w-8 text-center rounded bg-gray-100 cursor-pointer hover:opacity-70">
-                  {i}
-                </div>
-              ))
-            }
-          </div>
-        </div>
-        <div>
-          <div class="flex gap-2 text-xl">
-            {
-              ["easy", "medium", "hard"].map((i) => (
-                <div class="py-0.5 px-2  text-center rounded bg-gray-100 cursor-pointer hover:opacity-70">
-                  {i}
-                </div>
-              ))
-            }
-          </div>
-        </div>
-        <div class="ml-auto">
-          <div
-            class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer"
-            onclick="window.print();"
-          >
-            Print
-          </div>
-        </div>
-      </div>
-
-      <div class="text-3xl grid sm:grid-cols-2 gap-11">
-        {
-          problems.map((p) => (
-            <div class=" flex gap-4">
-              <div>{p.a}</div>
-              <div>{p.operator}</div>
-              <div>{p.b}</div>
-              <div>=</div>
-              <div class="hidden">{p.result}</div>
-              <div class="border-b border-gray-500 w-full" />
-            </div>
-          ))
-        }
-      </div>
+      <Sheet client:load />
     </div>
     <div class="text-center mt-8 text-gray-500 print:hidden">
       create by <a href="https://papazeal.com">papazeal.com</a>
