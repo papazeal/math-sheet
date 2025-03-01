@@ -114,7 +114,7 @@
       <div class="flex gap-3">
         {#each ["easy", "medium", "hard"] as i}
           <button
-            class="py-0.5 px-2 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200"
+            class="py-0.5 px-2 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200 capitalize"
             class:bg-gray-700!={level == i}
             class:text-white={level == i}
             on:click={(level = i)}
@@ -134,7 +134,7 @@
     </div>
   </div>
 
-  <div class="text-xl sm:text-2xl grid sm:grid-cols-2 gap-11">
+  <div class="text-2xl grid sm:grid-cols-2 gap-11">
     {#each problems as p}
       <div class=" flex gap-4">
         <div>{p.a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
