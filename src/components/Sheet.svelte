@@ -56,9 +56,9 @@
 </script>
 
 <div>
-  <div class="print:hidden mb-14 flex flex-wrap gap-5 sm:gap-12">
+  <div class="print:hidden mb-14 grid sm:flex gap-5 sm:gap-12 text-xl">
     <div>
-      <div class="flex gap-2 text-xl">
+      <div class="flex gap-3">
         {#each ["+", "-", "×", "÷"] as i}
           <button
             class="py-0.5 px-2 w-8 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200"
@@ -72,7 +72,7 @@
       </div>
     </div>
     <div>
-      <div class="flex gap-2 text-xl">
+      <div class="flex gap-3">
         {#each ["easy", "medium", "hard"] as i}
           <button
             class="py-0.5 px-2 text-center rounded bg-gray-100 cursor-pointer hover:bg-gray-200"
@@ -85,7 +85,7 @@
         {/each}
       </div>
     </div>
-    <div class="ml-auto">
+    <div class="sm:ml-auto">
       <button
         class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer"
         on:click={() => window.print()}
