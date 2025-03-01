@@ -100,7 +100,7 @@
       <div class="flex gap-4 sm:gap-3 justify-center">
         {#each ["+", "-", "×", "÷"] as i}
           <button
-            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300"
+            class="py-0.5 w-8 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300"
             class:!bg-gray-700={operator == i}
             class:text-white={operator == i}
             on:click={() => (operator = i)}
