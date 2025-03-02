@@ -1,8 +1,12 @@
 <script>
   let operator = "+";
   let level = "easy";
-  let count = 28;
+  let count = 26;
   $: problems = generateRandomMathProblems(count, operator, level);
+
+  function regenerateProblems() {
+    problems = generateRandomMathProblems(count, operator, level);
+  }
 
   function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -10,8 +14,9 @@
 
   function generateRandomMathProblems(count, operator, level) {
     const problems = [];
+    const usedPairs = new Set();
 
-    for (let i = 0; i < count; i++) {
+    while (problems.length < count) {
       let a, b, result;
 
       switch (operator) {
@@ -57,7 +62,7 @@
               break;
             case "medium":
               a = getRandomNumber(10, 99);
-              b = getRandomNumber(1, 9);
+              b = getRandomNumber(2, 12);
               break;
             case "hard":
               a = getRandomNumber(100, 999);
@@ -69,12 +74,12 @@
         case "÷":
           switch (level) {
             case "easy":
-              a = getRandomNumber(2, 9);
-              b = getRandomNumber(2, 9);
+              a = getRandomNumber(1, 9);
+              b = getRandomNumber(1, 9);
               break;
             case "medium":
               a = getRandomNumber(10, 99);
-              b = getRandomNumber(2, 9);
+              b = getRandomNumber(2, 12);
               break;
             case "hard":
               a = getRandomNumber(10, 99);
@@ -86,8 +91,11 @@
           result = a / b;
           break;
       }
-
-      problems.push({ a, b, operator, result });
+      let key = `${a}-${b}-${operator}`;
+      if (!usedPairs.has(key)) {
+        usedPairs.add(key);
+        problems.push({ a, b, operator, result });
+      }
     }
 
     return problems;
@@ -95,7 +103,9 @@
 </script>
 
 <div>
-  <div class="print:hidden mb-14 grid sm:flex gap-5 sm:gap-12 text-xl">
+  <div
+    class=" mb-14 print:mb-12 grid sm:flex sm:flex-wrap gap-5 sm:gap-12 text-xl"
+  >
     <div>
       <div class="flex gap-4 sm:gap-3 justify-center">
         {#each ["+", "-", "×", "÷"] as i}
@@ -103,7 +113,10 @@
             class="py-0.5 w-8 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300"
             class:!bg-gray-700={operator == i}
             class:text-white={operator == i}
-            on:click={() => (operator = i)}
+            on:click={() => {
+              regenerateProblems();
+              operator = i;
+            }}
           >
             {i}
           </button>
@@ -117,14 +130,17 @@
             class="py-0.5 px-2.5 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize"
             class:!bg-gray-700={level == i}
             class:text-white={level == i}
-            on:click={() => (level = i)}
+            on:click={() => {
+              regenerateProblems();
+              level = i;
+            }}
           >
             {i}
           </button>
         {/each}
       </div>
     </div>
-    <div class="sm:ml-auto flex justify-center">
+    <div class="sm:ml-auto flex justify-center print:hidden">
       <button
         class="bg-blue-400 text-white px-6 py-1 rounded cursor-pointer"
         on:click={() => window.print()}
