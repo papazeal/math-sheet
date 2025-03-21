@@ -3,8 +3,14 @@
   let level = "easy";
   let count = 26;
   $: problems = generateRandomMathProblems(count, operator, level);
+  $: shuffle = Array.from({ length: count }, () =>
+    Math.floor(Math.random() * 3)
+  );
 
   function regenerateProblems() {
+    shuffle = Array.from({ length: count }, () =>
+      Math.floor(Math.random() * 3)
+    );
     problems = generateRandomMathProblems(count, operator, level);
   }
 
@@ -150,15 +156,36 @@
     </div>
   </div>
 
-  <div class="text-2xl grid sm:grid-cols-2 gap-11">
-    {#each problems as p}
+  <div class="text-2xl grid sm:grid-cols-2 gap-11 gap-x-20">
+    {#each problems as p, index}
       <div class=" flex gap-4">
-        <div>{p.a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+        {#if shuffle[index] == 0}
+          <div class="border border-gray-500 w-full rounded"></div>
+        {:else}
+          <div>
+            {p.a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </div>
+        {/if}
+
         <div>{p.operator}</div>
-        <div>{p.b.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+
+        {#if shuffle[index] == 1}
+          <div class="border border-gray-500 w-full rounded"></div>
+        {:else}
+          <div>
+            {p.b.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </div>
+        {/if}
+
         <div>=</div>
         <div class="hidden">{p.result}</div>
-        <div class="border-b border-gray-500 w-full"></div>
+        {#if shuffle[index] == 2}
+          <div class="border border-gray-500 w-full rounded"></div>
+        {:else}
+          <div>
+            {p.result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </div>
+        {/if}
       </div>
     {/each}
   </div>
