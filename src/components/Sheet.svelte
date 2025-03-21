@@ -3,14 +3,17 @@
   let level = "easy";
   let count = 26;
   $: problems = generateRandomMathProblems(count, operator, level);
-  $: shuffle = Array.from({ length: count }, () =>
-    Math.floor(Math.random() * 3)
-  );
+  $: shuffle = Array.from({ length: count }, () => 2);
 
   function regenerateProblems() {
-    shuffle = Array.from({ length: count }, () =>
-      Math.floor(Math.random() * 3)
-    );
+    if (level == "easy") {
+      shuffle = Array.from({ length: count }, () => 2);
+    } else {
+      shuffle = Array.from({ length: count }, () =>
+        Math.floor(Math.random() * 3)
+      );
+    }
+
     problems = generateRandomMathProblems(count, operator, level);
   }
 
@@ -33,12 +36,12 @@
               b = getRandomNumber(1, 9);
               break;
             case "medium":
-              a = getRandomNumber(10, 99);
-              b = getRandomNumber(10, 99);
+              a = getRandomNumber(1, 12);
+              b = getRandomNumber(1, 12);
               break;
             case "hard":
-              a = getRandomNumber(100, 999);
-              b = getRandomNumber(100, 999);
+              a = getRandomNumber(10, 99);
+              b = getRandomNumber(10, 99);
               break;
           }
           result = a + b;
@@ -48,14 +51,17 @@
             case "easy":
               a = getRandomNumber(1, 9);
               b = getRandomNumber(1, 9);
+              if (a < b) {
+                [a, b] = [b, a];
+              }
               break;
             case "medium":
-              a = getRandomNumber(10, 99);
-              b = getRandomNumber(10, 99);
+              a = getRandomNumber(1, 12);
+              b = getRandomNumber(1, 12);
               break;
             case "hard":
-              a = getRandomNumber(100, 999);
-              b = getRandomNumber(100, 999);
+              a = getRandomNumber(10, 99);
+              b = getRandomNumber(10, 99);
               break;
           }
           result = a - b;
@@ -67,11 +73,11 @@
               b = getRandomNumber(1, 9);
               break;
             case "medium":
-              a = getRandomNumber(10, 99);
+              a = getRandomNumber(1, 12);
               b = getRandomNumber(2, 12);
               break;
             case "hard":
-              a = getRandomNumber(100, 999);
+              a = getRandomNumber(10, 99);
               b = getRandomNumber(10, 99);
               break;
           }
@@ -81,10 +87,10 @@
           switch (level) {
             case "easy":
               a = getRandomNumber(1, 9);
-              b = getRandomNumber(1, 9);
+              b = getRandomNumber(1, 4);
               break;
             case "medium":
-              a = getRandomNumber(10, 99);
+              a = getRandomNumber(1, 12);
               b = getRandomNumber(2, 12);
               break;
             case "hard":
@@ -120,8 +126,8 @@
             class:!bg-gray-700={operator == i}
             class:text-white={operator == i}
             on:click={() => {
-              regenerateProblems();
               operator = i;
+              regenerateProblems();
             }}
           >
             {i}
@@ -137,8 +143,8 @@
             class:!bg-gray-700={level == i}
             class:text-white={level == i}
             on:click={() => {
-              regenerateProblems();
               level = i;
+              regenerateProblems();
             }}
           >
             {i}
