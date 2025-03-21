@@ -156,7 +156,7 @@
     </div>
   </div>
 
-  <div class="text-2xl grid sm:grid-cols-2 gap-11 gap-x-20">
+  <div class="text-2xl grid sm:grid-cols-2 gap-11 gap-x-14">
     {#each problems as p, index}
       <div class=" flex gap-4">
         {#if shuffle[index] == 0}
