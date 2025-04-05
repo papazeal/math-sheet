@@ -150,14 +150,14 @@
 
 <div>
   <div
-    class=" mb-14 print:mb-12  gap-4 grid lg:flex lg:gap-x-10   text-lg print:flex print:flex-wrap print:text-base"
+    class=" mb-14 print:mb-12  gap-4 grid  lg:flex lg:gap-x-6   text-lg print:flex print:flex-wrap print:text-base "
   >
   
     <div >
-      <div class="flex gap-4 sm:gap-3 justify-center">
+      <div class="flex  rounded overflow-hidden  justify-center">
         {#each ["+", "-", "×", "÷"] as i}
           <button
-            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300"
+            class="py-0.5 px-3 text-center border-r bg-gray-200 border-gray-300 last:border-0  cursor-pointer hover:bg-gray-300 first:rounded-l last:rounded-r"
             class:!bg-gray-700={operator == i}
             class:text-white={operator == i}
             on:click={() => {
@@ -171,10 +171,10 @@
       </div>
     </div>
     <div>
-      <div class="flex gap-4 sm:gap-3 justify-center">
+      <div class="flex rounded  overflow-hidden justify-center">
         {#each ["easy", "medium", "hard"] as i}
           <button
-            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize"
+            class="py-0.5 px-3 bg-gray-200 text-center border-r border-gray-300 last:border-0 bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize first:rounded-l last:rounded-r"
             class:!bg-gray-700={level == i}
             class:text-white={level == i}
             on:click={() => {
@@ -188,10 +188,10 @@
       </div>
     </div>
     <div>
-      <div class="flex gap-4 sm:gap-3 justify-center">
+      <div class="flex rounded overflow-hidden   justify-center">
         {#each [{label:"1", value:"integer"}, {label:"0.1", value:"decimal"}] as i}
           <button
-            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize"
+            class="py-0.5 px-3 text-center border-r bg-gray-200 border-gray-300 last:border-0 cursor-pointer hover:bg-gray-300 capitalize first:rounded-l last:rounded-r"
             class:!bg-gray-700={mode == i.value}
             class:text-white={mode == i.value}
             on:click={() => {
@@ -205,7 +205,7 @@
       </div>
     </div>
   
-    <div class=" flex justify-center print:hidden ">
+    <div class=" flex justify-center print:hidden mt-4 lg:mt-0">
       <button
         class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer flex items-center"
         on:click={() => window.print()}
