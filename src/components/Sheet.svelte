@@ -140,7 +140,7 @@
       let key = `${a}-${b}-${operator}`;
       if (!usedPairs.has(key)) {
         usedPairs.add(key);
-        problems.push({ a, b, operator, result });
+        problems.push({ a, b, operator, result, key });
       }
     }
 
@@ -218,7 +218,8 @@
     {#each problems as p, index}
       <div class=" flex gap-4">
         {#if shuffle[index] == 0}
-        <AnswerField answer={p.a} />
+        {#key p.key}
+        <AnswerField answer={p.a} />{/key}
         {:else}
           <div>
             {writeNumber(p.a)}
@@ -228,7 +229,8 @@
         <div>{p.operator}</div>
 
         {#if shuffle[index] == 1}
-        <AnswerField answer={p.b} />
+        {#key p.key}
+        <AnswerField answer={p.b} />{/key}
         {:else}
           <div>
             {writeNumber(p.b)}
@@ -238,7 +240,8 @@
         <div>=</div>
         <div class="hidden">{p.result}</div>
         {#if shuffle[index] == 2}
-        <AnswerField answer={p.result} />
+        {#key p.key}
+        <AnswerField answer={p.result} />{/key}
         {:else}
           <div>
             {writeNumber(p.result)}
