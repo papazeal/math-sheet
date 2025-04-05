@@ -1,6 +1,8 @@
 <script>
+  import AnswerField from "./AnswerField.svelte";
   let operator = "+";
   let level = "easy";
+  let mode = 'integer'
   let count = 26;
   $: problems = generateRandomMathProblems(count, operator, level);
   $: shuffle = Array.from({ length: count }, () => 2);
@@ -18,7 +20,38 @@
   }
 
   function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    if(mode == 'integer'){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    if(mode == 'decimal'){
+      
+      let precision = 1;
+      if (level == "easy") {
+        precision = Math.random() < 0.5 ? 1 : 10; 
+      } else if (level == "medium") {
+        precision = Math.random() < 0.5 ? 1 : 10; 
+      } else if (level == "hard") {
+        precision = 10; 
+      }
+      return Number(((Math.floor(Math.random() * (max - min + 1)) + min)/precision).toFixed(2));
+    }
+    if(mode == 'fraction'){
+      return Math.floor(Math.random() * (max - min + 1) * 2) / 2 + min;
+    }
+    
+    // return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function writeNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // if (mode == "integer") {
+    //   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // } else if (mode == "decimal") {
+    //   num = level == "hard" ? num.toFixed(2) : num.toFixed(1);
+    //   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // } else if (mode == "fraction") {
+    //   return num.toFixed(1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // }
   }
 
   function generateRandomMathProblems(count, operator, level) {
@@ -44,7 +77,7 @@
               b = getRandomNumber(10, 99);
               break;
           }
-          result = a + b;
+          result = Number((a + b).toFixed(4));
           break;
         case "-":
           switch (level) {
@@ -64,7 +97,7 @@
               b = getRandomNumber(10, 99);
               break;
           }
-          result = a - b;
+          result = Number((a - b).toFixed(4));
           break;
         case "×":
           switch (level) {
@@ -81,7 +114,7 @@
               b = getRandomNumber(10, 99);
               break;
           }
-          result = a * b;
+          result = Number((a * b).toFixed(4));
           break;
         case "÷":
           switch (level) {
@@ -99,8 +132,9 @@
               break;
           }
           //   result = a * b;
-          a = a * b;
-          result = a / b;
+          result = a;
+          a = Number((a * b).toFixed(4))
+          // result = a / b;
           break;
       }
       let key = `${a}-${b}-${operator}`;
@@ -116,13 +150,14 @@
 
 <div>
   <div
-    class=" mb-14 print:mb-12 grid sm:flex sm:flex-wrap gap-5 sm:gap-12 text-xl"
+    class=" mb-14 print:mb-12  gap-4 grid   text-xl print:flex print:flex-wrap print:text-base"
   >
-    <div>
+  
+    <div >
       <div class="flex gap-4 sm:gap-3 justify-center">
         {#each ["+", "-", "×", "÷"] as i}
           <button
-            class="py-0.5 w-8 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300"
+            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300"
             class:!bg-gray-700={operator == i}
             class:text-white={operator == i}
             on:click={() => {
@@ -139,7 +174,7 @@
       <div class="flex gap-4 sm:gap-3 justify-center">
         {#each ["easy", "medium", "hard"] as i}
           <button
-            class="py-0.5 px-2.5 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize"
+            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize"
             class:!bg-gray-700={level == i}
             class:text-white={level == i}
             on:click={() => {
@@ -152,44 +187,61 @@
         {/each}
       </div>
     </div>
-    <div class="sm:ml-auto flex justify-center print:hidden">
+    <div>
+      <div class="flex gap-4 sm:gap-3 justify-center">
+        {#each [{label:"1", value:"integer"}, {label:"0.1", value:"decimal"}] as i}
+          <button
+            class="py-0.5 px-3 text-center rounded bg-gray-200 cursor-pointer hover:bg-gray-300 capitalize"
+            class:!bg-gray-700={mode == i.value}
+            class:text-white={mode == i.value}
+            on:click={() => {
+              mode = i.value;
+              regenerateProblems();
+            }}
+          >
+            {i.label}
+          </button>
+        {/each}
+      </div>
+    </div>
+  
+    <div class=" flex justify-center print:hidden ">
       <button
-        class="bg-blue-400 text-white px-6 py-1 rounded cursor-pointer"
+        class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer flex items-center"
         on:click={() => window.print()}
-      >
-        Print
+      ><svg class="w-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M19 10V5a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v5m15 0H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1"/><path d="M17.5 20v-3a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v3m-4-7h2"/></g></svg> Print
       </button>
     </div>
   </div>
 
-  <div class="text-2xl grid sm:grid-cols-2 gap-11 gap-x-14">
+  <div class="text-2xl grid sm:grid-cols-2 gap-9 gap-x-14">
     {#each problems as p, index}
       <div class=" flex gap-4">
         {#if shuffle[index] == 0}
-          <div class="border border-gray-500 w-full rounded"></div>
+        <AnswerField answer={p.a} />
         {:else}
           <div>
-            {p.a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {writeNumber(p.a)}
           </div>
         {/if}
 
         <div>{p.operator}</div>
 
         {#if shuffle[index] == 1}
-          <div class="border border-gray-500 w-full rounded"></div>
+        <AnswerField answer={p.b} />
         {:else}
           <div>
-            {p.b.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {writeNumber(p.b)}
           </div>
         {/if}
 
         <div>=</div>
         <div class="hidden">{p.result}</div>
         {#if shuffle[index] == 2}
-          <div class="border border-gray-500 w-full rounded"></div>
+        <AnswerField answer={p.result} />
         {:else}
           <div>
-            {p.result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {writeNumber(p.result)}
           </div>
         {/if}
       </div>
