@@ -150,7 +150,7 @@
 
 <div>
   <div
-    class=" mb-14 print:mb-12  gap-4 grid   text-xl print:flex print:flex-wrap print:text-base"
+    class=" mb-14 print:mb-12  gap-4 grid lg:flex lg:gap-x-10   text-lg print:flex print:flex-wrap print:text-base"
   >
   
     <div >
