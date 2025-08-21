@@ -326,9 +326,9 @@
       </div>
     </div>
 
-    <div class=" flex justify-center print:hidden mt-4 lg:mt-0">
+    <div class=" flex justify-center lg:ml-auto print:hidden mt-4 lg:mt-0">
       <button
-        class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer flex items-center"
+        class="bg-blue-400 text-white px-4 py-1 rounded cursor-pointer flex items-center hover:opacity-90"
         on:click={() => window.print()}
         ><svg
           class="w-6 mr-2"
