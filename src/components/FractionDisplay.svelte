@@ -5,8 +5,10 @@
 
 <div class="fraction">
   <div class="numerator">{numerator}</div>
-  <div class="fraction-bar"></div>
-  <div class="denominator">{denominator}</div>
+  {#if denominator != 1}
+    <div class="fraction-bar"></div>
+    <div class="denominator">{denominator}</div>
+  {/if}
 </div>
 
 <style>
@@ -15,7 +17,7 @@
     flex-direction: column;
     align-items: center;
     font-size: 1em;
-    min-width: 2em;
+    min-width: 1.5em;
   }
   .numerator {
     padding-bottom: 0.1em;

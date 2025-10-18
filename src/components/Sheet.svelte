@@ -9,13 +9,13 @@
   $: shuffle = Array.from({ length: count }, () => 2);
 
   function regenerateProblems() {
-    if (level == "easy") {
-      shuffle = Array.from({ length: count }, () => 2);
-    } else {
-      shuffle = Array.from({ length: count }, () =>
-        Math.floor(Math.random() * 3)
-      );
-    }
+    // if (level == "easy" || level == "medium") {
+    //   shuffle = Array.from({ length: count }, () => 2);
+    // } else {
+    //   shuffle = Array.from({ length: count }, () =>
+    //     Math.floor(Math.random() * 3)
+    //   );
+    // }
 
     if (mode == "fraction") {
       count = 18;
@@ -35,9 +35,9 @@
       if (level == "easy") {
         precision = Math.random() < 0.5 ? 1 : 10;
       } else if (level == "medium") {
-        precision = Math.random() < 0.5 ? 1 : 10;
-      } else if (level == "hard") {
         precision = 10;
+      } else if (level == "hard") {
+        precision = 100;
       }
       return Number(
         (
@@ -48,8 +48,11 @@
     }
     if (mode == "fraction") {
       // Generate a random positive proper fraction
-      const denominator = Math.floor(Math.random() * 8) + 2; // 2 to 9
-      const numerator = Math.floor(Math.random() * (denominator - 1)) + 1; // 1 to denominator-1
+      // let denominator = Math.floor(Math.random() * 8) + 2; // 2 to 9
+      // let numerator = Math.floor(Math.random() * (denominator - 1)) + 1; // 1 to denominator-1
+
+      let denominator = Math.floor(Math.random() * (max - min + 1)) + min;
+      let numerator = Math.floor(Math.random() * (max - min + 1)) + min;
       return { numerator, denominator };
     }
 
@@ -67,6 +70,7 @@
     ) {
       return num.numerator + "/" + num.denominator;
     }
+    return num;
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     // if (mode == "integer") {
     //   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -151,13 +155,29 @@
 
       if (mode === "fraction") {
         // For fractions, use the same min/max as easy integer for now
-        a = getRandomNumber(1, 9);
-        b = getRandomNumber(1, 9);
+
+        if (level == "easy") {
+          a = getRandomNumber(1, 9);
+          b = getRandomNumber(1, 9);
+        } else if (level == "medium") {
+          a = getRandomNumber(1, 9);
+          b = getRandomNumber(1, 9);
+        } else if (level == "hard") {
+          a = getRandomNumber(1, 9);
+          b = getRandomNumber(1, 19);
+        }
+
         switch (operator) {
           case "+":
+            if (level == "easy") {
+              a.denominator = b.denominator;
+            }
             result = addFractions(a, b);
             break;
           case "-":
+            if (level == "easy") {
+              a.denominator = b.denominator;
+            }
             // Ensure a >= b for positive result
             const fa = toImproperFraction(a);
             const fb = toImproperFraction(b);
@@ -167,9 +187,15 @@
             result = subtractFractions(a, b);
             break;
           case "×":
+            if (level == "easy") {
+              b.denominator = 1;
+            }
             result = multiplyFractions(a, b);
             break;
           case "÷":
+            if (level == "easy") {
+              b.denominator = 1;
+            }
             // Avoid dividing by zero
             if (b.numerator === 0) continue;
             result = divideFractions(a, b);
@@ -191,12 +217,12 @@
               b = getRandomNumber(1, 9);
               break;
             case "medium":
-              a = getRandomNumber(1, 12);
-              b = getRandomNumber(1, 12);
+              a = getRandomNumber(1, 99);
+              b = getRandomNumber(1, 99);
               break;
             case "hard":
-              a = getRandomNumber(10, 99);
-              b = getRandomNumber(10, 99);
+              a = getRandomNumber(1, 999);
+              b = getRandomNumber(1, 999);
               break;
           }
           result = Number((a + b).toFixed(4));
@@ -211,12 +237,12 @@
               }
               break;
             case "medium":
-              a = getRandomNumber(1, 12);
-              b = getRandomNumber(1, 12);
+              a = getRandomNumber(1, 99);
+              b = getRandomNumber(1, 99);
               break;
             case "hard":
-              a = getRandomNumber(10, 99);
-              b = getRandomNumber(10, 99);
+              a = getRandomNumber(1, 999);
+              b = getRandomNumber(1, 999);
               break;
           }
           result = Number((a - b).toFixed(4));
@@ -228,8 +254,8 @@
               b = getRandomNumber(1, 9);
               break;
             case "medium":
-              a = getRandomNumber(1, 12);
-              b = getRandomNumber(2, 12);
+              a = getRandomNumber(1, 9);
+              b = getRandomNumber(10, 99);
               break;
             case "hard":
               a = getRandomNumber(10, 99);
@@ -245,8 +271,8 @@
               b = getRandomNumber(1, 4);
               break;
             case "medium":
-              a = getRandomNumber(1, 12);
-              b = getRandomNumber(2, 12);
+              a = getRandomNumber(1, 9);
+              b = getRandomNumber(10, 99);
               break;
             case "hard":
               a = getRandomNumber(10, 99);
